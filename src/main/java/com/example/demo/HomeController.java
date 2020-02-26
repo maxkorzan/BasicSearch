@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class HomeController {
@@ -28,5 +29,11 @@ public class HomeController {
         //pull from repository --> model as "people" arraylist --> html template "index"
         model.addAttribute("people", personRepository.findAll());
         return "index";
+    }
+
+    @RequestMapping("/search")
+    public String search(@RequestParam("search") String searchTerm, Model model){
+        model.addAttribute("peopleSearch", personRepository.findByName(searchTerm));
+        return "searchlist";
     }
 }
